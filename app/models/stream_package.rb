@@ -1,0 +1,2 @@
+class StreamPackage < ApplicationRecord
+end

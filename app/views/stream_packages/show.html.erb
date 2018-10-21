@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @stream_package.name %>
+</p>
+
+<p>
+  <strong>Cost:</strong>
+  <%= @stream_package.cost %>
+</p>
+
+<%= link_to 'Edit', edit_stream_package_path(@stream_package) %> |
+<%= link_to 'Back', stream_packages_path %>
