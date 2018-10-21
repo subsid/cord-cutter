@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
-  def show
-  end
+    before_action :authenticate
+    def show
+    end
 end
