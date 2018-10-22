@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get 'logout', to: 'sessions#destroy', as: 'logout'
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: redirect('/')
-  get 'signin', to: 'signin#show'
+  get 'signin', to: 'signin#show', as: 'signin'
   get 'home', to: 'home#show', as: 'home'
 
   root 'stream_packages#index'
