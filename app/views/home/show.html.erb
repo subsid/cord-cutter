@@ -1,5 +1,9 @@
+
 <% if current_user %>
+	<h1>Welcome <%= @current_user.first_name%> </h1>
 	<% current_user.attributes.each do |k, v| %>
 		<b><%= k %>:</b> <%= v %> <br>
 	<% end %>
 <% end %>
+
+<a href="/logout">LOGOUT!</a>
