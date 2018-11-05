@@ -14,5 +14,8 @@
  *= require_self
  */
 
-@import "semantic-ui";
+div#main {
+  margin: 2em;
+}
 
+@import "semantic-ui";
