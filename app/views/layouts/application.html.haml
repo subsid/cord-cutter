@@ -9,10 +9,6 @@
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
     .ui.tabular.menu
-      %a.active.item
-        Bio
-      %a.item
-        Photos
     #main
       - if flash[:notice]
         #notice.message= flash[:notice]

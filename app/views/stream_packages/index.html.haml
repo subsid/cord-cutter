@@ -10,14 +10,11 @@
       %th More Info
   %tbody
     %tr
-      %td Hulu
-      %td 50
-      %td link_to "More about Hulu", stream_packages_path("Hulu")
     - @stream_packages.each do |package|
       %tr
         %td= package.name
         %td= package.cost
-        %td= link_to "More about #{package.name}", stream_packages_path(package)
+        %td= link_to "More about #{package.name}", stream_package_path(package)
 
 = link_to 'Add Stream Package', new_stream_package_path
 
