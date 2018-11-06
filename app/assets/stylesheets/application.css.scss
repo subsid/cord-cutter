@@ -13,3 +13,9 @@
  *= require_tree .
  *= require_self
  */
+
+div#main {
+  margin: 2em;
+}
+
+@import "semantic-ui";
