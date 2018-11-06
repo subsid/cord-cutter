@@ -2,11 +2,10 @@ class HomeController < ApplicationController
     before_action :authenticate
     def show
         @user = User.find(session[:user_id])
-        puts params[:must_channels]
-        puts params[:good_channels]
-        puts params[:okay_channels]
         
-        ChannelsUser.where(user_id: @user.id).delete_all
+        if params[:must_channels] || params[:good_channels] ||params[:okay_channels]
+            ChannelsUser.where(user_id: @user.id).delete_all
+        end
         
         @user.add_channels(params[:must_channels], 'must')
         @user.add_channels(params[:good_channels], 'good')
