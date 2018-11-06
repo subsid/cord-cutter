@@ -6,6 +6,14 @@ class HomeController < ApplicationController
         puts params[:good_channels]
         puts params[:okay_channels]
         
+        ChannelsUser.where(user_id: @user.id).delete_all
+        
+        @user.add_channels(params[:must_channels], 'must')
+        @user.add_channels(params[:good_channels], 'good')
+        @user.add_channels(params[:okay_channels], 'ok')
+        
+        @user.save
+        
         user_channels = @user.channels_users
         # if user_channels.blank?
         #   flash[:notice] = "'#{@user}' has no saved preferences"
@@ -25,4 +33,5 @@ class HomeController < ApplicationController
             @okay_channels << Channel.find(uc.channel_id).name if uc.preferences == 'ok'
         end
     end
+    
 end
