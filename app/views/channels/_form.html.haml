@@ -1,0 +1,19 @@
+= form_with(model: channel, local: true, class: 'ui form') do |form|
+  - if channel.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(channel.errors.count, "error")
+        prohibited this channel from being saved:
+      %ul
+        - channel.errors.full_messages.each do |message|
+          %li= message
+    <h4 class="ui dividing header">Shipping Information</h4>
+  %h4.ui.dividing.header Channel information
+  .field
+    = form.label :name
+    = form.text_field :name
+  .field
+    = form.label :category
+    = form.select :category, ['Movies', 'Sports', 'Other'], {selected: "Other"}, {class: "ui dropdown"}
+  .actions
+    = form.submit

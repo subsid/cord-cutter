@@ -1,0 +1,8 @@
+%p
+  %strong Name:
+  = @stream_package.name
+%p
+  %strong Cost:
+  = @stream_package.cost
+= link_to 'Edit', edit_stream_package_path(@stream_package)
+= link_to 'Back', stream_packages_path
