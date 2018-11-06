@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'auth/failure', to: redirect('/')
   get 'signin', to: 'signin#show', as: 'signin'
   get 'home', to: 'home#show', as: 'home'
+  post 'home', to: 'home#show'
 
   root to: "home#show"
 

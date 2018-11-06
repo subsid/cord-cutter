@@ -1,7 +1,7 @@
 
 %h1 Welcome #{@current_user.first_name}
 
-= form_tag '/home', :method => :get, :id => 'channels_form' do
+= form_tag '/home', :method => :post, :id => 'channels_form' do
 	%h2 Channels:
 	%br
 	%table#channels
