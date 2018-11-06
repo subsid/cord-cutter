@@ -7,9 +7,9 @@ class HomeController < ApplicationController
         puts params[:okay_channels]
         
         user_channels = @user.channels_users
-        if user_channels.blank?
-          flash[:notice] = "'#{@user}' has no saved preferences"
-        end
+        # if user_channels.blank?
+        #   flash[:notice] = "'#{@user}' has no saved preferences"
+        # end
         
         @all_channels = Array.new
         Channel.all.each do |c|

@@ -2,15 +2,15 @@
 %h1 Welcome #{@current_user.first_name}
 
 = form_tag '/home', :method => :get, :id => 'channels_form' do
-	Channels:
+	%h2 Channels:
 	%br
 	%table#channels
 		%thead
 			%tr
-				%th Channel
-				%th Must
-				%th Good
-				%th Ok
+				<th width = 250px>Channel</th>
+				<th width = 10px>Must</th>
+				<th width = 10px> Good</th>
+				<th width = 10px> Ok</th>
 		%tbody
 			- @all_channels.each do |channel|
 				%tr
