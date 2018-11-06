@@ -13,4 +13,13 @@ class User < ApplicationRecord
 			user.save!
 		end
 	end
+	
+	def add_channels(channel_name, preference)
+		if channel_name
+        	channel_name.each do |mc|
+        		c_obj = Channel.find_by_name(mc)
+                self.channels_users.build :preferences => preference, :channel_id => c_obj.id	
+        	end
+        end
+	end
 end
