@@ -7,9 +7,6 @@
       %ul
         - stream_package.errors.full_messages.each do |message|
           %li= message
-  -# .field
-  -#   %label= form.label :name
-  -#   %input{name: =form.text_field :name, placeholder: "Package Name", type: "text"}
   .field
     = form.label :name
     = form.text_field :name
@@ -19,21 +16,12 @@
   .field
     %label Channels
     .ui.fluid.multiple.search.selection.dropdown
-      %input{name: "receipt", type: "hidden"}/
+      %input{name: "receipt", type: "hidden", name: "stream_package[channel_ids][]", value: "#{stream_package.channel_ids.join(',')}"}/
       %i.dropdown.icon
       .default.text Select channels
       .menu
-        .item{"data-text" => "HBO", "data-value" => "hbo"}
-          HBO
-        .item{"data-text" => "National Geographic", "data-value" => "national_geographic"}
-          National Geographic
-        .item{"data-text" => "Fox News", "data-value" => "fox_news"}
-          Fox News
-        .item{"data-text" => "BBC", "data-value" => "bbc"}
-          BBC
-        .item{"data-text" => "Cartoon Network", "data-value" => "cartoon_network"}
-          Cartoon Network
-        .item{"data-text" => "Pogo", "data-value" => "pogo"}
-          Pogo
+        - channels.each do |channel|
+          .item{"data-text" => channel.name, "data-value" => channel.id}
+            =channel.name
   .actions
     = form.submit

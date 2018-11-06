@@ -18,6 +18,3 @@
 //= require_tree .
 
 
-$(function(){
-    $('.ui.dropdown').dropdown();
-})

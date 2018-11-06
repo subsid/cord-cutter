@@ -15,6 +15,7 @@ class StreamPackagesController < ApplicationController
   # GET /stream_packages/new
   def new
     @stream_package = StreamPackage.new
+    @channels = Channel.all
   end
 
   # GET /stream_packages/1/edit
@@ -24,7 +25,8 @@ class StreamPackagesController < ApplicationController
   # POST /stream_packages
   # POST /stream_packages.json
   def create
-    @stream_package = StreamPackage.new(stream_package_params)
+    _stream_package_params = stream_package_params.merge(:channel_ids => stream_package_params[:channel_ids].map {|id| id.split(",")}.flatten)
+    @stream_package = StreamPackage.new(_stream_package_params)
 
     respond_to do |format|
       if @stream_package.save
@@ -41,7 +43,9 @@ class StreamPackagesController < ApplicationController
   # PATCH/PUT /stream_packages/1.json
   def update
     respond_to do |format|
-      if @stream_package.update(stream_package_params)
+      _stream_package_params = stream_package_params.merge(:channel_ids => stream_package_params[:channel_ids].map {|id| id.split(",")}.flatten)
+
+      if @stream_package.update(_stream_package_params)
         format.html { redirect_to @stream_package, notice: 'Stream package was successfully updated.' }
         format.json { render :show, status: :ok, location: @stream_package }
       else
@@ -65,10 +69,11 @@ class StreamPackagesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_stream_package
       @stream_package = StreamPackage.find(params[:id])
+      @channels = Channel.all
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def stream_package_params
-      params.require(:stream_package).permit(:name, :cost)
+      params.require(:stream_package).permit(:name, :cost, :channel_ids => [])
     end
 end
