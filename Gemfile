@@ -68,7 +68,7 @@ group :test do
 end
 
 group :production do
-  gem 'pg', '~> 0.21' # for Heroku deployment
+  gem 'pg'
   gem 'rails_12factor'
 end
 
@@ -76,6 +76,5 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'omniauth-google-oauth2'
-gem 'pg'
 gem 'figaro'
 gem 'rspec-rails'

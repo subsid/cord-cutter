@@ -37,6 +37,13 @@ ActiveRecord::Schema.define(version: 2018_11_03_205200) do
     t.string "preferences"
   end
 
+  create_table "user_channels", id: false, force: :cascade do |t|
+    t.bigint "users_id"
+    t.bigint "channels_id"
+    t.index ["channels_id"], name: "index_user_channels_on_channels_id"
+    t.index ["users_id"], name: "index_user_channels_on_users_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "provider"
     t.string "uid"

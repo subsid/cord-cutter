@@ -8,13 +8,13 @@
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
+    #main
     .ui.tabular.menu
       = link_to 'Stream Packages', stream_packages_path, class: request.path == "/stream_packages" ? "item active" : "item"
       = link_to "Channels", channels_path, class: request.path == "/channels" ? "item active" : "item"
-    #main
-      - if flash[:notice]
-        #notice.message= flash[:notice]
-      - elsif flash[:warning]
-        #warning.message= flash[:warning]
-      = yield
+    - if flash[:notice]
+      #notice.message= flash[:notice]
+    - elsif flash[:warning]
+      #warning.message= flash[:warning]
+    = yield
 
