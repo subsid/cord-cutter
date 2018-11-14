@@ -18,4 +18,8 @@ div#main {
   margin: 2em;
 }
 
+a:hover {
+  background-color: transparent;
+}
+
 @import "semantic-ui";
