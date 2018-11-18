@@ -17,6 +17,7 @@
 !/log/.keep
 /tmp
 log
+cord-cutter/tmp/**
 
 .byebug_history
 Iter0

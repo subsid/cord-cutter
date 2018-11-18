@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_03_205200) do
+ActiveRecord::Schema.define(version: 2018_11_05_191337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,10 +22,22 @@ ActiveRecord::Schema.define(version: 2018_11_03_205200) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "channels_stream_packages", id: false, force: :cascade do |t|
+    t.integer "stream_package_id"
+    t.integer "channel_id"
+  end
+
   create_table "channels_users", id: false, force: :cascade do |t|
     t.integer "user_id"
     t.integer "channel_id"
     t.string "preferences"
+  end
+
+  create_table "stream_packages", force: :cascade do |t|
+    t.string "name"
+    t.integer "cost"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "user_channels", id: false, force: :cascade do |t|

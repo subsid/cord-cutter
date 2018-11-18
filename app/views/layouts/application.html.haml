@@ -1,13 +1,16 @@
-!!!
+<!DOCTYPE html>
 %html
   %head
-    %title Cord Cutter!
-    = stylesheet_link_tag 'application', 'media' => 'all', 'data-turbolinks-track' => true
-    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    %meta{content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title CordCutter
     = csrf_meta_tags
-
+    = csp_meta_tag
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
-    %h1.title Cord Cutter!
+    .ui.tabular.menu
+      = link_to 'Stream Packages', stream_packages_path, class: request.path == "/stream_packages" ? "item active" : "item"
+      = link_to "Channels", channels_path, class: request.path == "/channels" ? "item active" : "item"
     #main
       - if flash[:notice]
         #notice.message= flash[:notice]

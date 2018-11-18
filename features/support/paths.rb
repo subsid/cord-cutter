@@ -10,6 +10,14 @@ module NavigationHelpers
 
     when /^the home\s?page$/
       '/'
+      # '/'; stream_packages_path
+      # resolve later
+    when /^the signin\s?page$/
+      signin_path
+    when /^the new stream packages\s?page$/
+      new_stream_package_path
+    when /^the channels\s?page$/
+      channels_path
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
@@ -18,9 +26,20 @@ module NavigationHelpers
     #     user_profile_path(User.find_by_login($1))
     
     when /^the edit page for "(.*)"$/i
-      edit_movie_path(Movie.find_by_title($1))
+      edit_stream_package_path(StreamPackage.find_by_name($1))
     
     when /^the details page for "(.*)"$/i
+      stream_package_path(StreamPackage.find_by_name($1))
+
+    when /^the channel details page for "(.*)"$/i
+      channel_path(Channel.find_by_name($1))
+      
+    when /^the edit channel page for "(.*)"$/i
+      # edit_channel_path(Channel.find_by_name($1))
+# resolve later
+      edit_movie_path(Movie.find_by_title($1))
+    
+    when /^the details page for  "(.*)"$/i
       movie_path(Movie.find_by_title($1))
       
     when /^the similar movies page for "(.*)"$/i
