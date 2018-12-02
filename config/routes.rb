@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get 'user/input', to: 'user#input'
   post 'user/recommendation', to: 'user#recommendation', as: 'recommendation'
 
-  root 'user#input'
+  root to: redirect('user/input')
   resources :stream_packages
   resources :channels
 end
