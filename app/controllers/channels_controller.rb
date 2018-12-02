@@ -15,10 +15,12 @@ class ChannelsController < ApplicationController
   # GET /channels/new
   def new
     @channel = Channel.new
+    @categories = categories
   end
 
   # GET /channels/1/edit
   def edit
+    @categories = categories
   end
 
   # POST /channels
@@ -70,5 +72,17 @@ class ChannelsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def channel_params
       params.require(:channel).permit(:name, :category)
+    end
+
+    def categories
+      [
+        'Entertainment',
+        'Movies',
+        'News',
+        'Other',
+        'Sports',
+        'Science',
+        'TV Shows'
+        ]
     end
 end

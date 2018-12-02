@@ -22,4 +22,8 @@ class User < ApplicationRecord
             end
           end
         end
+
+        def self.recommendation(must_channels, good_channels, ok_channels)
+          ["foo"]
+        end
 end

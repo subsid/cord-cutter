@@ -9,9 +9,10 @@
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
     .ui.tabular.menu
-      = link_to 'Cut Cord', "user/input", class: request.path == "/user/input" ? "item active" : "item"
+      = link_to 'Cut Cord', "/user/input", class: request.path == "/user/input" ? "item active" : "item"
       = link_to 'Stream Packages', stream_packages_path, class: request.path == "/stream_packages" ? "item active" : "item"
       = link_to "Channels", channels_path, class: request.path == "/channels" ? "item active" : "item"
+      = link_to "Logout", logout_path, class: "right item"
     #main
       - if flash[:notice]
         #notice.message= flash[:notice]

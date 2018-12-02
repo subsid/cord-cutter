@@ -1,10 +1,7 @@
 %h1 Let's Cut your Cord!
 = form_with url: "/user/recommendation", class: "ui form" do |form|
   .field
-    = form.label "Budget ($)"
-    = form.number_field :budget
-  .field
-    %label Must have
+    %label Must have channels
     .ui.fluid.multiple.search.selection.dropdown
       %input{name: "receipt", type: "hidden", name: "must_channel_ids[]", value: "#{@must_channel_ids.join(',')}"}/
       %i.dropdown.icon
@@ -14,7 +11,7 @@
           .item{"data-text" => channel.name, "data-value" => channel.id}
             =channel.name
   .field
-    %label Would like to have
+    %label Would like to have channels
     .ui.fluid.multiple.search.selection.dropdown
       %input{name: "receipt", type: "hidden", name: "good_channel_ids[]", value: ""}
       %i.dropdown.icon
@@ -24,7 +21,7 @@
           .item{"data-text" => channel.name, "data-value" => channel.id}
             =channel.name
   .field
-    %label Ok to have
+    %label Ok to have channels
     .ui.fluid.multiple.search.selection.dropdown
       %input{name: "receipt", type: "hidden", name: "ok_channel_ids[]", value: ""}
       %i.dropdown.icon
@@ -33,6 +30,9 @@
         - @channels.each do |channel|
           .item{"data-text" => channel.name, "data-value" => channel.id}
             =channel.name
+  .field
+    = form.label "Budget ($/month)"
+    = form.number_field :budget
   .actions
     = form.submit "Get Recommendations", class: "ui primary button"
 :javascript

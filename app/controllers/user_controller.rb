@@ -13,7 +13,7 @@ class UserController < ApplicationController
           @okay_channel_ids << Channel.find(uc.channel_id).id if uc.preferences == 'ok'
       end
       @channels = Channel.all
-      @recommendations = ["foo"]
+      @recommendations = flash[:reco] || ["bar"]
     end
 
     def recommendation
@@ -21,6 +21,7 @@ class UserController < ApplicationController
       must_channel_ids = params[:must_channel_ids].map{ |id| id.split(",") }.flatten
       good_channel_ids = params[:good_channel_ids].map{ |id| id.split(",") }.flatten
       ok_channel_ids = params[:ok_channel_ids].map{ |id| id.split(",") }.flatten
+      budget = params[:budget]
 
       if !@user.nil? and !(must_channel_ids.empty? and good_channel_ids.empty? and ok_channel_ids.empty?)
           ChannelsUser.where(user_id: @user.id).delete_all
@@ -37,6 +38,8 @@ class UserController < ApplicationController
         user_channels = @user.channels_users
       end
 
-      redirect_to "/user/input"
+
+      flash[:reco] = User.recommendation(must_channel_ids, good_channel_ids, ok_channel_ids)
+      redirect_to "/user/input", reco: recommendations
     end
 end

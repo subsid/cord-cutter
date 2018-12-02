@@ -14,6 +14,21 @@
     = form.text_field :name
   .field
     = form.label :category
-    = form.select :category, ['Movies', 'Sports', 'Other'], {selected: "Other"}, {class: "ui dropdown"}
+    .ui.fluid.search.selection.dropdown
+      %input{name: "receipt", type: "hidden", name: "channel[category]", value: "#{channel.category || ""}"}/
+      %i.dropdown.icon
+      .default.text Select channels
+      .menu
+        - categories.each do |cat|
+          .item{"data-text" => cat, "data-value" => cat}
+            =cat
   .actions
     = form.submit
+
+:javascript
+  $(document).ready(function() {
+    $(function(){
+        $('.ui.dropdown').dropdown();
+    })
+  })
+
