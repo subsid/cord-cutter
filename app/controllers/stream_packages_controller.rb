@@ -1,5 +1,5 @@
 class StreamPackagesController < ApplicationController
-  before_action :authenticate
+  # before_action :authenticate
   before_action :set_stream_package, only: [:show, :edit, :update, :destroy]
 
   # GET /stream_packages

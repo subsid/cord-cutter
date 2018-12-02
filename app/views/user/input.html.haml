@@ -1,0 +1,45 @@
+%h1 Let's Cut your Cord!
+= form_with url: "/user/recommendation", class: "ui form" do |form|
+  .field
+    = form.label "Budget ($)"
+    = form.number_field :budget
+  .field
+    %label Must have
+    .ui.fluid.multiple.search.selection.dropdown
+      %input{name: "receipt", type: "hidden", name: "must_channel_ids[]", value: "#{@must_channel_ids.join(',')}"}/
+      %i.dropdown.icon
+      .default.text Select channels
+      .menu
+        - @channels.each do |channel|
+          .item{"data-text" => channel.name, "data-value" => channel.id}
+            =channel.name
+  .field
+    %label Would like to have
+    .ui.fluid.multiple.search.selection.dropdown
+      %input{name: "receipt", type: "hidden", name: "good_channel_ids[]", value: ""}
+      %i.dropdown.icon
+      .default.text Select channels
+      .menu
+        - @channels.each do |channel|
+          .item{"data-text" => channel.name, "data-value" => channel.id}
+            =channel.name
+  .field
+    %label Ok to have
+    .ui.fluid.multiple.search.selection.dropdown
+      %input{name: "receipt", type: "hidden", name: "ok_channel_ids[]", value: ""}
+      %i.dropdown.icon
+      .default.text Select channels
+      .menu
+        - @channels.each do |channel|
+          .item{"data-text" => channel.name, "data-value" => channel.id}
+            =channel.name
+  .actions
+    = form.submit "Get Recommendations", class: "ui primary button"
+:javascript
+  $(document).ready(function() {
+    $(function(){
+        $('.ui.dropdown').dropdown();
+    })
+  })
+
+= link_to 'Back', stream_packages_path
