@@ -39,7 +39,12 @@ class UserController < ApplicationController
       end
 
 
-      flash[:reco] = User.recommendation(must_channel_ids, good_channel_ids, ok_channel_ids)
+      flash[:reco] = User.recommendation(
+        must_channel_ids,
+        good_channel_ids,
+        ok_channel_ids,
+        StreamPackage.all
+      )
       redirect_to "/user/input", reco: recommendations
     end
 end

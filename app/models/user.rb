@@ -23,7 +23,10 @@ class User < ApplicationRecord
           end
         end
 
-        def self.recommendation(must_channels, good_channels, ok_channels)
+        def self.recommendation(must_channels_id, good_channels_id, ok_channels_id, packages)
+          package_with_channels = packages.map { |p| {"id": p.id,  "cost": p.cost, "channel_ids": p.channels.ids } }
+          debugger
+
           ["foo"]
         end
 end
