@@ -1,0 +1,17 @@
+.recommendations
+  %table.ui.striped.table
+    %thead
+      %tr
+        %th Package Names
+        %th Cost
+        %th Channels supported
+    %tbody
+      - recommendations.each do |rec|
+        %tr
+          %td
+            = rec
+          %td
+            = rec
+          %td
+            = rec
+

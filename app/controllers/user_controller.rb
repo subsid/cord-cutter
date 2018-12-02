@@ -13,6 +13,7 @@ class UserController < ApplicationController
           @okay_channel_ids << Channel.find(uc.channel_id).id if uc.preferences == 'ok'
       end
       @channels = Channel.all
+      @recommendations = ["foo"]
     end
 
     def recommendation
@@ -27,7 +28,6 @@ class UserController < ApplicationController
 
       user_channels = []
       if !@user.nil?
-        debugger
         @user.add_channels(must_channel_ids, 'must')
         @user.add_channels(good_channel_ids, 'good')
         @user.add_channels(ok_channel_ids, 'ok')
