@@ -19,3 +19,7 @@ Then("the category of {string} should be {string}") do |channel_name, category|
   channel = Channel.find_by(name: channel_name)
   expect(category).to eq(channel.category)
 end
+
+Then(/^I go with "([^"]*)" from Channels$/) do |channel|
+  first('input#channel_dropdown', visible:false).set(Channel.find_by(name: channel).id)
+end

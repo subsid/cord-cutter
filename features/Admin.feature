@@ -13,6 +13,10 @@ Background: Admin is logged in
   | name        | cost |
   | Sun Network |  50  |
 
+  Given the following channels exist:
+  | name        | category |
+  | Sun TV      |  other   |
+
   Scenario: Add Stream Package and back
     When I follow "Add Stream Package"
     Then I should be on the new stream packages page
@@ -24,10 +28,8 @@ Background: Admin is logged in
     Then I should see "New Stream Package"
     And I fill in "Name" with "ABC"
     And I fill in "Cost" with "10"
-    And I press "Channels"
-    And I select "HBO" from "Channels"
-    And I select "National Geographic" from "Channels"
-    And I press "Create Stream Package"
+    And I go with "Sun TV" from Channels
+    And I press "Create Stream package"
     Then I should see "Stream package was successfully created"
     And I am on the details page for "ABC"
 
