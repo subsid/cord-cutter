@@ -30,9 +30,6 @@
         - @channels.each do |channel|
           .item{"data-text" => channel.name, "data-value" => channel.id}
             =channel.name
-  .field
-    = form.label "Budget ($/month)"
-    = form.number_field :budget
   .actions
     = form.submit "Get Recommendations", class: "ui primary button"
 :javascript

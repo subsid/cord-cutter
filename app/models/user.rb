@@ -28,12 +28,16 @@ class User < ApplicationRecord
           end
         end
 
-        def self.recommendation(must_channels_id, good_channels_id, ok_channels_id, packages)
-          packages = packages.map { |p| {"id": p.id, "cost": p.cost, "channel_ids": p.channels.ids } }
-          must = packages.map { |p| p[:channel_ids] & must_channels_id }
-          good = packages.map { |p| p[:channel_ids] & (must_channels_id | good_channels_id) }
-          ok = packages.map { |p| p[:channel_ids] & (must_channels_id | good_channels_id | ok_channels_id) }
-          costs = packages.map { |p| p[:cost] }
+        def self.recommendation(must_channel_ids, good_channel_ids, ok_channel_ids, packages)
+          must_channel_ids = must_channel_ids.map(&:to_i)
+          good_channel_ids = good_channel_ids.map(&:to_i)
+          ok_channel_ids = ok_channel_ids.map(&:to_i)
+
+          packages = packages.map { |p| { id: p.id, name: p.name, cost: p.cost, channel_ids: p.channels.ids } }
+          must = packages.map { |p| p[:channel_ids] & must_channel_ids }
+          good = packages.map { |p| p[:channel_ids] & (must_channel_ids | good_channel_ids) }
+          ok = packages.map { |p| p[:channel_ids] & (must_channel_ids | good_channel_ids | ok_channel_ids) }
+          costs = packages.map { |p| p[:cost] || 1 }
           must_idx = self.getWeightedSetCover(must, costs)
           good_idx = self.getWeightedSetCover(good, costs)
           ok_idx = self.getWeightedSetCover(ok, costs)
@@ -45,7 +49,7 @@ class User < ApplicationRecord
           udict = {}
           selected = []
           scopy = [] # During the process, S will be modified. Make a copy for s.
-  
+
           s.each_with_index do |item, index|
               scopy.push(Set.new(item))
               item.each do |j|
@@ -55,11 +59,11 @@ class User < ApplicationRecord
                   udict[j].add(index)
               end
           end
-          
+
           pq = PQ.new()
           cost = 0
           coverednum = 0
-  
+
           scopy.each_with_index do |item, index|
               if item.length() == 0
                   pq.push(index, MAXPRIORITY)
@@ -67,13 +71,13 @@ class User < ApplicationRecord
                   pq.push(index, w[index].to_f / item.length())
               end
           end
-  
+
           while coverednum < udict.length()
               a = pq.pop
               selected.push(a)
               cost += w[a]
               coverednum += scopy[a].length()
-  
+
               # Update the sets that contains the new covered elements
               scopy[a].each do |m|
                   udict[m].each do |n|
@@ -87,7 +91,7 @@ class User < ApplicationRecord
                       end
                   end
               end
-  
+
               scopy[a].clear()
               pq.push(a, MAXPRIORITY)
           end

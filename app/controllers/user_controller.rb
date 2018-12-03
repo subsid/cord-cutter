@@ -13,7 +13,7 @@ class UserController < ApplicationController
           @okay_channel_ids << Channel.find(uc.channel_id).id if uc.preferences == 'ok'
       end
       @channels = Channel.all
-      @recommendations = flash[:reco] || ["bar"]
+      @recommendations = flash[:reco] || []
     end
 
     def recommendation
@@ -45,6 +45,6 @@ class UserController < ApplicationController
         ok_channel_ids,
         StreamPackage.all
       )
-      redirect_to "/user/input", reco: recommendations
+      redirect_to "/user/input"
     end
 end

@@ -1,17 +1,18 @@
 .recommendations
-  %table.ui.striped.table
-    %thead
-      %tr
-        %th Package Names
-        %th Cost
-        %th Channels supported
-    %tbody
-      - recommendations.each do |rec|
+  - if !recommendations.empty?
+    %table.ui.striped.table
+      %thead
         %tr
-          %td
-            = rec
-          %td
-            = rec
-          %td
-            = rec
+          %th Package Names
+          %th Cost
+          %th Channels supported
+      %tbody
+        - recommendations[0].each do |p|
+          %tr
+            %td
+              = p["name"]
+            %td
+              = p["cost"]
+            %td
+              = p["channel_ids"]
 
