@@ -6,14 +6,15 @@ class UserController < ApplicationController
 
       @must_channel_ids = Array.new
       @good_channel_ids = Array.new
-      @okay_channel_ids = Array.new
+      @ok_channel_ids = Array.new
       user_channels.each do |uc|
           @must_channel_ids << Channel.find(uc.channel_id).id if uc.preferences == 'must'
           @good_channel_ids << Channel.find(uc.channel_id).id if uc.preferences == 'good'
-          @okay_channel_ids << Channel.find(uc.channel_id).id if uc.preferences == 'ok'
+          @ok_channel_ids << Channel.find(uc.channel_id).id if uc.preferences == 'ok'
       end
       @channels = Channel.all
       @recommendations = flash[:reco] || []
+      @budget = session[:budget] || 100
     end
 
     def recommendation
@@ -21,7 +22,10 @@ class UserController < ApplicationController
       must_channel_ids = params[:must_channel_ids].map{ |id| id.split(",") }.flatten
       good_channel_ids = params[:good_channel_ids].map{ |id| id.split(",") }.flatten
       ok_channel_ids = params[:ok_channel_ids].map{ |id| id.split(",") }.flatten
-      budget = params[:budget]
+      budget = params[:budget].empty? ? Float::INFINITY : params[:budget]
+      if params[:budget]
+        session[:budget] = params[:budget]
+      end
 
       if !@user.nil? and !(must_channel_ids.empty? and good_channel_ids.empty? and ok_channel_ids.empty?)
           ChannelsUser.where(user_id: @user.id).delete_all
@@ -43,7 +47,8 @@ class UserController < ApplicationController
         must_channel_ids,
         good_channel_ids,
         ok_channel_ids,
-        StreamPackage.all
+        StreamPackage.all,
+        budget
       )
       redirect_to "/user/input"
     end

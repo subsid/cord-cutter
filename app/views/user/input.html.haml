@@ -13,7 +13,7 @@
   .field
     %label Would like to have channels
     .ui.fluid.multiple.search.selection.dropdown
-      %input{name: "receipt", type: "hidden", name: "good_channel_ids[]", value: ""}
+      %input{name: "receipt", type: "hidden", name: "good_channel_ids[]", value: "#{@good_channel_ids.join(',')}"}
       %i.dropdown.icon
       .default.text Select channels
       .menu
@@ -23,13 +23,16 @@
   .field
     %label Ok to have channels
     .ui.fluid.multiple.search.selection.dropdown
-      %input{name: "receipt", type: "hidden", name: "ok_channel_ids[]", value: ""}
+      %input{name: "receipt", type: "hidden", name: "ok_channel_ids[]",  value: "#{@ok_channel_ids.join(',')}"}
       %i.dropdown.icon
       .default.text Select channels
       .menu
         - @channels.each do |channel|
           .item{"data-text" => channel.name, "data-value" => channel.id}
             =channel.name
+  .field
+    = form.label :budget
+    = form.number_field :budget, value: @budget
   .actions
     = form.submit "Get Recommendations", class: "ui primary button"
 :javascript

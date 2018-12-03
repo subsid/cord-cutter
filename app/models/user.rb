@@ -28,7 +28,8 @@ class User < ApplicationRecord
           end
         end
 
-        def self.recommendation(must_channel_ids, good_channel_ids, ok_channel_ids, packages)
+        ## TODO Cleanup code
+        def self.recommendation(must_channel_ids, good_channel_ids, ok_channel_ids, packages, budget)
           must_channel_ids = must_channel_ids.map(&:to_i)
           good_channel_ids = good_channel_ids.map(&:to_i)
           ok_channel_ids = ok_channel_ids.map(&:to_i)
@@ -42,7 +43,44 @@ class User < ApplicationRecord
           good_idx = self.getWeightedSetCover(good, costs)
           ok_idx = self.getWeightedSetCover(ok, costs)
 
-          return packages.values_at(*must_idx), packages.values_at(*good_idx), packages.values_at(*ok_idx)
+          must = packages.values_at(*must_idx)
+          good = packages.values_at(*good_idx)
+          ok = packages.values_at(*ok_idx)
+
+          rec = [
+           {
+            count: [(must_channel_ids & must.map {|p| p[:channel_ids]}.flatten).length, must_channel_ids.length],
+            must_count: [(must_channel_ids & must.map {|p| p[:channel_ids]}.flatten).length, must_channel_ids.length],
+            good_count: [(good_channel_ids & must.map {|p| p[:channel_ids]}.flatten).length, good_channel_ids.length],
+            ok_count: [(ok_channel_ids & must.map {|p| p[:channel_ids]}.flatten).length, ok_channel_ids.length],
+            must_channels: Channel.find(must_channel_ids & must.map {|p| p[:channel_ids]}.flatten),
+            good_channels: Channel.find(good_channel_ids & must.map {|p| p[:channel_ids]}.flatten),
+            ok_channels: Channel.find(ok_channel_ids & must.map {|p| p[:channel_ids]}.flatten),
+            packages: must,
+            class: must.map{ |p| p[:cost] }.sum <= budget.to_f ? "positive" : "negative"
+           },{
+            count: [((must_channel_ids | good_channel_ids) & good.map {|p| p[:channel_ids]}.flatten).length, must_channel_ids.length + good_channel_ids.length],
+            must_count: [(must_channel_ids & good.map {|p| p[:channel_ids]}.flatten).length, must_channel_ids.length],
+            good_count: [(good_channel_ids & good.map {|p| p[:channel_ids]}.flatten).length, good_channel_ids.length],
+            ok_count: [(ok_channel_ids & good.map {|p| p[:channel_ids]}.flatten).length, ok_channel_ids.length],
+            must_channels: Channel.find(must_channel_ids & good.map {|p| p[:channel_ids]}.flatten),
+            good_channels: Channel.find(good_channel_ids & good.map {|p| p[:channel_ids]}.flatten),
+            ok_channels: Channel.find(ok_channel_ids & good.map {|p| p[:channel_ids]}.flatten),
+            packages: good,
+            class: good.map{ |p| p[:cost] }.sum <= budget.to_f ? "positive" : "negative"
+           },{
+            count: [((must_channel_ids | good_channel_ids | ok_channel_ids) & ok.map {|p| p[:channel_ids]}.flatten).length, must_channel_ids.length + good_channel_ids.length + ok_channel_ids.length],
+            must_count: [(must_channel_ids & ok.map {|p| p[:channel_ids]}.flatten).length, must_channel_ids.length],
+            good_count: [(good_channel_ids & ok.map {|p| p[:channel_ids]}.flatten).length, good_channel_ids.length],
+            ok_count: [(ok_channel_ids & ok.map {|p| p[:channel_ids]}.flatten).length, ok_channel_ids.length],
+            must_channels: Channel.find(must_channel_ids & ok.map {|p| p[:channel_ids]}.flatten),
+            good_channels: Channel.find(good_channel_ids & ok.map {|p| p[:channel_ids]}.flatten),
+            ok_channels: Channel.find(ok_channel_ids & ok.map {|p| p[:channel_ids]}.flatten),
+            packages: ok,
+            class: ok.map{ |p| p[:cost] }.sum <= budget.to_f ? "positive" : "negative"
+           }]
+
+          return rec.uniq
         end
 
         def self.getWeightedSetCover(s, w)
