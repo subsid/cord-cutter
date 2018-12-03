@@ -80,7 +80,7 @@ class User < ApplicationRecord
             class: ok.map{ |p| p[:cost] }.sum <= budget.to_f ? "positive" : "negative"
            }]
 
-          return rec.uniq
+          return rec.uniq {|r| r[:packages]}
         end
 
         def self.getWeightedSetCover(s, w)
