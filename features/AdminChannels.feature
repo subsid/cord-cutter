@@ -17,7 +17,7 @@ Background: Admin is logged in and goes to Channels page
 Scenario: More Info Channels
   When I go to the edit channel page for "Sun TV"
   And I fill in "Name" with "KTV"
-  And I select "Movies" from "Category"
+  And I go with "Movies" from Category
   And I press "Update Channel"
   Then I should see "Channel was successfully updated"
   And the category of "KTV" should be "Movies"
@@ -33,6 +33,6 @@ Scenario: Edit Channel
 Scenario: Add new Channel
   When follow "New Channel"
   And I fill in "Name" with "Jaya TV"
-  And I select "Other" from "Category"
+  And I go with "Other" from Category
   And I press "Create Channel"
   Then I should be on the channel details page for "Jaya TV"

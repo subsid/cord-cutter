@@ -23,3 +23,7 @@ end
 Then(/^I go with "([^"]*)" from Channels$/) do |channel|
   first('input#channel_dropdown', visible:false).set(Channel.find_by(name: channel).id)
 end
+
+Then(/^I go with "([^"]*)" from Category$/) do |category|
+  first('input#category_dropdown', visible:false).set(category)
+end

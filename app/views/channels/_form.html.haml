@@ -15,7 +15,7 @@
   .field
     = form.label :category
     .ui.fluid.search.selection.dropdown
-      %input{name: "receipt", type: "hidden", name: "channel[category]", value: "#{channel.category || ""}"}/
+      %input{id: "category_dropdown", name: "receipt", type: "hidden", name: "channel[category]", value: "#{channel.category || ""}"}/
       %i.dropdown.icon
       .default.text Select channels
       .menu
