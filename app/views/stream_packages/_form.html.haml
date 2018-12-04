@@ -16,7 +16,7 @@
   .field
     %label Channels
     .ui.fluid.multiple.search.selection.dropdown
-      %input{id: "channel_dropdown", name: "receipt", type: "hidden", name: "stream_package[channel_ids][]", value: "#{stream_package.channel_ids.join(',')}"}/
+      %input{id: "channel_dropdown", name: "receipt", type: "hidden", name: "stream_package[channel_ids][]", value: "#{stream_package.channel_ids.join(',')}", multiple: true}/
       %i.dropdown.icon
       .default.text Select channels
       .menu

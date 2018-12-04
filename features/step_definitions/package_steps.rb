@@ -32,8 +32,13 @@ Then("the category of {string} should be {string}") do |channel_name, category|
   expect(category).to eq(channel.category)
 end
 
-Then(/^I go with "([^"]*)" from Channels$/) do |channel|
-  first('input#channel_dropdown', visible:false).set(Channel.find_by(name: channel).id)
+Then(/^I go with "([^"]*)" from Channels$/) do |channels|
+  channel_list = channels.split(', ')
+  channel_ids = []
+  channel_list.each do |channel|
+    channel_ids << Channel.find_by(name: channel).id
+  end
+  find('input#channel_dropdown', visible:false).set(channel_ids)
 end
 
 Then(/^I go with "([^"]*)" from Category$/) do |category|
@@ -42,4 +47,8 @@ end
 
 Then(/^I go with "([^"]*)" from Must have channels$/) do |channel|
   first('input#must_have_dropdown', visible:false).set(Channel.find_by(name: channel).id)
+end
+
+Then(/^I go with "([^"]*)" from Would like to have channels$/) do |channel|
+  first('input#good_to_have_dropdown', visible:false).set(Channel.find_by(name: channel).id)
 end

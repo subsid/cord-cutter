@@ -11,7 +11,8 @@ Background: Admin is logged in
   
   Given the following channels exist:
   | name        | category |
-  | Sun TV      |  other   |
+  | Sun TV      |  Other   |
+  | KTV         |  Movies  |
 
   Given the following packages exist:
   | name        | cost |
@@ -28,10 +29,12 @@ Background: Admin is logged in
     Then I should see "New Stream Package"
     And I fill in "Name" with "ABC"
     And I fill in "Cost" with "10"
-    And I go with "Sun TV" from Channels
+    And I go with "Sun TV, KTV" from Channels
     And I press "Create Stream package"
     Then I should see "Stream package was successfully created"
     And I am on the details page for "ABC"
+    And I should see "Sun TV"
+    And I should see "KTV"
 
   Scenario: Add Stream Package
     When I follow "Add Stream Package"
