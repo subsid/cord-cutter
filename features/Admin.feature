@@ -9,13 +9,13 @@ Background: Admin is logged in
   And I follow "Sign in with Google"
   Then I am on the home page
   
-  Given the following packages exist:
-  | name        | cost |
-  | Sun Network |  50  |
-
   Given the following channels exist:
   | name        | category |
   | Sun TV      |  other   |
+
+  Given the following packages exist:
+  | name        | cost |
+  | Sun Network |  50  |
 
   Scenario: Add Stream Package and back
     When I follow "Add Stream Package"

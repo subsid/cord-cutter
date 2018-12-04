@@ -1,6 +1,18 @@
 Given(/^the following packages exist:$/) do |packages_table|
   packages_table.hashes.each do |package_hash|
-    StreamPackage.create package_hash
+    if package_hash["channels"]
+      stream_package = StreamPackage.create
+      stream_package.name = package_hash["name"]
+      stream_package.cost = package_hash["cost"]
+      channels_string = package_hash["channels"]
+      channels_list = channels_string.split(',') 
+      channels_list.each do |channel_name|
+        channel = Channel.find_by(name: channel_name)
+        stream_package.channels << channel if channel
+      end
+    else
+      StreamPackage.create package_hash
+    end
   end
 end
 
@@ -26,4 +38,8 @@ end
 
 Then(/^I go with "([^"]*)" from Category$/) do |category|
   first('input#category_dropdown', visible:false).set(category)
+end
+
+Then(/^I go with "([^"]*)" from Must have channels$/) do |channel|
+  first('input#must_have_dropdown', visible:false).set(Channel.find_by(name: channel).id)
 end

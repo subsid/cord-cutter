@@ -16,6 +16,8 @@ module NavigationHelpers
       new_stream_package_path
     when /^the channels\s?page$/
       channels_path
+    when /^the user home\s?page$/
+      user_input_path
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
