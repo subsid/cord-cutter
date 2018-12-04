@@ -1,15 +1,16 @@
 Given(/^the following packages exist:$/) do |packages_table|
   packages_table.hashes.each do |package_hash|
     if package_hash["channels"]
-      stream_package = StreamPackage.create
+      stream_package = StreamPackage.new
       stream_package.name = package_hash["name"]
       stream_package.cost = package_hash["cost"]
       channels_string = package_hash["channels"]
-      channels_list = channels_string.split(',') 
+      channels_list = channels_string.split(',')
       channels_list.each do |channel_name|
         channel = Channel.find_by(name: channel_name)
         stream_package.channels << channel if channel
       end
+      stream_package.save
     else
       StreamPackage.create package_hash
     end
