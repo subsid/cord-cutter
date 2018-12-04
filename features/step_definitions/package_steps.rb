@@ -45,10 +45,20 @@ Then(/^I go with "([^"]*)" from Category$/) do |category|
   first('input#category_dropdown', visible:false).set(category)
 end
 
-Then(/^I go with "([^"]*)" from Must have channels$/) do |channel|
-  first('input#must_have_dropdown', visible:false).set(Channel.find_by(name: channel).id)
+Then(/^I go with "([^"]*)" from Must have channels$/) do |channels|
+  channel_list = channels.split(', ')
+  channel_ids = []
+  channel_list.each do |channel|
+    channel_ids << Channel.find_by(name: channel).id
+  end
+  first('input#must_have_dropdown', visible:false).set(channel_ids)
 end
 
-Then(/^I go with "([^"]*)" from Would like to have channels$/) do |channel|
-  first('input#good_to_have_dropdown', visible:false).set(Channel.find_by(name: channel).id)
+Then(/^I go with "([^"]*)" from Would like to have channels$/) do |channels|
+  channel_list = channels.split(', ')
+  channel_ids = []
+  channel_list.each do |channel|
+    channel_ids << Channel.find_by(name: channel).id
+  end
+  first('input#good_to_have_dropdown', visible:false).set(channel_ids)
 end

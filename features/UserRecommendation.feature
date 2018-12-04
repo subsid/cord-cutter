@@ -16,6 +16,9 @@ Background: User Page
   | Adithya TV  |  Other            |
   | Vijay TV    |  Entertainment    |
   | Chutti TV   |  Other            |
+  | CNN         |  Other            |
+  | NDTV        |  Other            |
+  | Jaya News   |  Other            |
 
   Given the following packages exist:
   | name        | cost | channels                                           |
@@ -27,8 +30,14 @@ Background: User Page
   | CheapNews   |  10  | NDTV,CNN                                           |
   
 Scenario: Get Sun Network
-  When I go with "Sun TV" from Must have channels
-  #And I go with "KTV" from Must have channels
+  When I go with "Sun TV, KTV" from Must have channels
   And I fill in "Budget" with "50"
   And I press "Get Recommendations"
+  Then I should see "Sun Network"
+  
+Scenario: News
+  When I go with "NDTV, CNN, Jaya News" from Must have channels
+  And I fill in "Budget" with "20"
+  And I press "Get Recommendations"
+  Then I should see "HuiNews"
   
