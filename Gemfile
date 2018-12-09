@@ -65,6 +65,7 @@ group :test do
   # database_cleaner is not required, but highly recommended
   gem 'database_cleaner'
   gem 'simplecov', :require => false
+  gem 'rails-controller-testing'
 end
 
 group :production do

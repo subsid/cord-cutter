@@ -1,4 +1,5 @@
 class ChannelsController < ApplicationController
+  before_action :authenticate
   before_action :set_channel, only: [:show, :edit, :update, :destroy]
 
   # GET /channels
@@ -42,6 +43,7 @@ class ChannelsController < ApplicationController
   # PATCH/PUT /channels/1
   # PATCH/PUT /channels/1.json
   def update
+    puts "[ChannelsController.update] channel from db id: #{@channel.id}, name: #{@channel.name}"
     respond_to do |format|
       if @channel.update(channel_params)
         format.html { redirect_to @channel, notice: 'Channel was successfully updated.' }
